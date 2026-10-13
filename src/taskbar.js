@@ -1543,6 +1543,9 @@ export const TaskbarItemContainer = GObject.registerClass(
     _init() {
       super._init()
       this.x_expand = this.y_expand = false
+
+      // The clone lives in uiGroup, so it would otherwise outlive this item.
+      this.connect('destroy', () => this._raisedClone?.destroy())
     }
 
     vfunc_allocate(box) {
